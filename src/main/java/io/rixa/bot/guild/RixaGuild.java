@@ -8,7 +8,6 @@ import io.rixa.bot.guild.modules.module.ConversationModule;
 import io.rixa.bot.guild.modules.module.LevelsModule;
 import io.rixa.bot.guild.modules.module.MusicModule;
 import io.rixa.bot.guild.settings.Settings;
-import io.rixa.bot.user.manager.UserManager;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.core.entities.Guild;
@@ -95,9 +94,10 @@ public class RixaGuild implements IGuild {
     }
 
     @Override
+    //may god help whoever needs to edit this.
     public boolean hasPermission(User user, RixaPermission permission) {
         Member member = guild.getMember(user);
-        return member != null && (!member.getRoles().stream().filter(role -> (permissionMap.containsKey(role.getId()) && permissionMap.get(role.getId()).contains(permission))).collect(Collectors.toList()).isEmpty() || UserManager.getInstance().getUser(user).hasPermission(guild.getId(), permission));
+        return member != null && (!member.getRoles().stream().filter(role -> (permissionMap.containsKey(role.getId()) && permissionMap.get(role.getId()).contains(permission))).collect(Collectors.toList()).isEmpty());
     }
 
     @Override

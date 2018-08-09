@@ -7,8 +7,6 @@ import io.rixa.bot.guild.RixaGuild;
 import io.rixa.bot.guild.manager.GuildManager;
 import io.rixa.bot.guild.modules.module.MusicModule;
 import io.rixa.bot.pagination.Pagination;
-import io.rixa.bot.user.RixaUser;
-import io.rixa.bot.user.manager.UserManager;
 import io.rixa.bot.utils.DiscordUtils;
 import io.rixa.bot.utils.MessageFactory;
 import java.util.Arrays;
@@ -27,27 +25,25 @@ public class ConfigCommand extends Command {
     super(command, rixaPermission, description, commandType);
 
     pagination = new Pagination(Arrays.asList(
-        "%pconfig set greetings ; Set channel where greeting messages are announced!",
-        "%pconfig set farewell ; Set channel where farewell messages are announced!",
-        "%pconfig set prefix <prefix> ; Set Rixa's command prefix!",
-        "%pconfig set defaultRole <role> ; Set role to be assigned when a user joins the server!",
-        "%pconfig set muteRole <role> ; Set role to be assigned when a user is muted!",
-        "%pconfig set musicRole <musicRole> ; Set role required to use the music functions! (Not required)",
-
-             /*   "%pconfig set twitterCKey <key> ; Set Twitter Consumer Key!",
-                "%pconfig set twitterCSecret <key> ; Set Twitter Consumer Secret!",
-                "%pconfig set twitterAToken <key> ; Set Twitter Access Key!",
-                "%pconfig set twitterASecret <key> ; Set Twitter Access Secret!",
-                "%config set twitterChannel ; Set the channel for Twitter feed updates!",*/
-
-        "%pconfig set joinMessage <joinMessage> ; Set the greetings message for when a user joins the server!",
-        "%pconfig set quitMessage <quitMessage> ; Set the quit message for when a user leaves the server!",
-        "%pconfig set joinPm <joinPm> ; Set the message to be private messaged when a user joins!",
-        "%pconfig set description <description> ; Set your server description!",
-        "%pconfig addPerm <role> <permission> ; Give a role permission to access a command!",
-        "%pconfig removePerm <role> <permission> ; Remove a role's permission to access a command!",
-        "%pconfig enable <module> ; Enabled a Rixa Module!",
-        "%pconfig disable <module> ; Disable a Rixa Module!"
+            "%pconfig set greetings ; Set channel where greeting messages are announced!",
+            "%pconfig set farewell ; Set channel where farewell messages are announced!",
+            "%pconfig set prefix <prefix> ; Set Rixa's command prefix!",
+            "%pconfig set defaultRole <role> ; Set role to be assigned when a user joins the server!",
+            "%pconfig set muteRole <role> ; Set role to be assigned when a user is muted!",
+            "%pconfig set musicRole <musicRole> ; Set role required to use the music functions! (Not required)",/*
+            "%pconfig set twitterCKey <key> ; Set Twitter Consumer Key!",
+            "%pconfig set twitterCSecret <key> ; Set Twitter Consumer Secret!",
+            "%pconfig set twitterAToken <key> ; Set Twitter Access Key!",
+            "%pconfig set twitterASecret <key> ; Set Twitter Access Secret!",
+            "%config set twitterChannel ; Set the channel for Twitter feed updates!",*/
+            "%pconfig set joinMessage <joinMessage> ; Set the greetings message for when a user joins the server!",
+            "%pconfig set quitMessage <quitMessage> ; Set the quit message for when a user leaves the server!",
+            "%pconfig set joinPm <joinPm> ; Set the message to be private messaged when a user joins!",
+            "%pconfig set description <description> ; Set your server description!",
+            "%pconfig addPerm <role> <permission> ; Give a role permission to access a command!",
+            "%pconfig removePerm <role> <permission> ; Remove a role's permission to access a command!",
+            "%pconfig enable <module> ; Enabled a Rixa Module!",
+            "%pconfig disable <module> ; Disable a Rixa Module!"
     ), 6);
   }
 
@@ -192,22 +188,8 @@ public class ConfigCommand extends Command {
               guild.getIconUrl()).setColor(member.getColor()).queue(channel);
           return;
         }
-        if (args[1].equalsIgnoreCase("user")) {
-          List<Member> targets = DiscordUtils.memberSearch(guild, string, false);
-          if (targets.isEmpty()) {
-            MessageFactory.create("Could not find that user!").setColor(member.getColor())
-                .queue(channel);
-            return;
-          }
-          RixaUser targetUser = UserManager.getInstance().getUser(targets.get(0).getUser());
-          targetUser.addPermission(guild.getId(), permission);
-          MessageFactory.create("User: " + targetUser.getUser().getAsMention() + " | Permission: " +
-              permission.toString()).setAuthor("Permission Given",
-              guild.getIconUrl()).setColor(member.getColor()).queue(channel);
-          return;
-        }
         MessageFactory
-            .create("Incorrect Usage! Try " + commandLabel + " addPerm <user/role> <permission>!")
+            .create("Incorrect Usage! Try " + commandLabel + " addPerm <role> <permission>!")
             .setColor(member.getColor())
             .queue(channel);
         break;
@@ -234,22 +216,8 @@ public class ConfigCommand extends Command {
               guild.getIconUrl()).setColor(member.getColor()).queue(channel);
           return;
         }
-        if (args[1].equalsIgnoreCase("user")) {
-          List<Member> targets = DiscordUtils.memberSearch(guild, string, false);
-          if (targets.isEmpty()) {
-            MessageFactory.create("Could not find that user!").setColor(member.getColor())
-                .queue(channel);
-            return;
-          }
-          RixaUser targetUser = UserManager.getInstance().getUser(targets.get(0).getUser());
-          targetUser.removePermission(guild.getId(), permission);
-          MessageFactory.create("Role: " + targetUser.getUser().getAsMention() + " | Permission: " +
-              permission.toString()).setAuthor("Permission Revoked",
-              guild.getIconUrl()).setColor(member.getColor()).queue(channel);
-          return;
-        }
         MessageFactory
-            .create("Incorrect Usage! Try " + commandLabel + " addPerm <user/role> <permission>!")
+            .create("Incorrect Usage! Try " + commandLabel + " addPerm <role> <permission>!")
             .setColor(member.getColor())
             .queue(channel);
         break;

@@ -1,16 +1,12 @@
 package io.rixa.bot.user;
 
-import io.rixa.bot.commands.perms.RixaPermission;
 import io.rixa.bot.data.storage.DatabaseAdapter;
-import io.rixa.bot.user.mapper.UserPermissionsMapper;
 import io.rixa.bot.utils.DiscordUtils;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,14 +17,11 @@ public class RixaUser {
     @Getter
     private Map<String, Integer> levels;
     @Getter
-    private Map<String, List<RixaPermission>> permissions;
-    @Getter
     private long last_awarded;
 
     public RixaUser(User user) {
         this.user = user;
         levels = new HashMap<>();
-        permissions = new HashMap<>();
         last_awarded = (System.currentTimeMillis() - 60000);
         load();
     }
@@ -47,13 +40,6 @@ public class RixaUser {
                         return 0;
                     });
         }
-        permissions.clear();
-        permissions.putAll(
-                DatabaseAdapter.getInstance().get().query("SELECT * FROM `permissions` WHERE `user_id` = ?",
-                        new Object[]{
-                        user.getId()
-                        },
-                        new UserPermissionsMapper()));
     }
 
     public void save() {
@@ -88,29 +74,6 @@ public class RixaUser {
         }
         this.last_awarded = System.currentTimeMillis();
         return currentLevel < DiscordUtils.getLevelFromExperience(levels.get(guild.getId()));
-    }
-
-    public void addPermission(String guildId, RixaPermission rixaPermission) {
-        if (!permissions.containsKey(guildId)) {
-            permissions.put(guildId, Collections.singletonList(rixaPermission));
-            return;
-        }
-        List<RixaPermission> permissionsList = permissions.get(guildId);
-        if (permissionsList.contains(rixaPermission)) return;
-        permissionsList.add(rixaPermission);
-        permissions.replace(guildId, permissionsList);
-    }
-
-    public void removePermission(String guildId, RixaPermission rixaPermission) {
-        if (!permissions.containsKey(guildId)) return;
-        List<RixaPermission> permissionsList = permissions.get(guildId);
-        if (!permissionsList.contains(rixaPermission)) return;
-        permissionsList.remove(rixaPermission);
-        permissions.replace(guildId, permissionsList);
-    }
-
-    public boolean hasPermission(String guildId, RixaPermission rixaPermission) {
-        return permissions.containsKey(guildId) && permissions.get(guildId).contains(rixaPermission);
     }
 
     public int getLevels(String id) {
