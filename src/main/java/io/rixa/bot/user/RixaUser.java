@@ -2,15 +2,11 @@ package io.rixa.bot.user;
 
 import io.rixa.bot.commands.perms.RixaPermission;
 import io.rixa.bot.data.storage.DatabaseAdapter;
-import io.rixa.bot.data.storage.enums.Statements;
-import io.rixa.bot.guild.enums.PermissionType;
-import io.rixa.bot.pagination.ObjectPagination;
 import io.rixa.bot.user.mapper.UserPermissionsMapper;
 import io.rixa.bot.utils.DiscordUtils;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,8 +48,12 @@ public class RixaUser {
                     });
         }
         permissions.clear();
-        permissions.putAll(DatabaseAdapter.getInstance().get().query("SELECT * FROM `permissions` WHERE `type` = ? AND `object_id` = ?",
-                new Object[]{PermissionType.USER, user.getId()}, new UserPermissionsMapper()));
+        permissions.putAll(
+                DatabaseAdapter.getInstance().get().query("SELECT * FROM `permissions` WHERE `user_id` = ?",
+                        new Object[]{
+                        user.getId()
+                        },
+                        new UserPermissionsMapper()));
     }
 
     public void save() {

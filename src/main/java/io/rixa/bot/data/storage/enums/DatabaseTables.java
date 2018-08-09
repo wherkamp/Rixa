@@ -18,7 +18,7 @@ public enum DatabaseTables {
             " `skip_amount` int(5) NOT NULL DEFAULT '0', `max_playlist_amount` int(5) NOT NULL DEFAULT '100', `enabled` tinyint(1) NOT NULL DEFAULT '0'\n" +
             ");"),
 
-    PERMISSIONS("CREATE TABLE IF NOT EXISTS `permissions` ( `role_id` varchar(255) NOT NULL, `guild_id` varchar(255) NOT NULL, `MUTE` tinyint(1) NOT NULL DEFAULT '0'," +
+    PERMISSIONS("CREATE TABLE IF NOT EXISTS `permissions` ( `user_id` varchar(255) NOT NULL, `guild_id` varchar(255) NOT NULL, `MUTE` tinyint(1) NOT NULL DEFAULT '0'," +
             " `ADD_ROLE` tinyint(1) NOT NULL DEFAULT '0', `REMOVE_ROLE` tinyint(1) NOT NULL DEFAULT '0', `CLEAR_CHAT` tinyint(1) NOT NULL DEFAULT '0'," +
             " `ACCESS_CONFIG` tinyint(1) NOT NULL DEFAULT '0', `PM_MESSAGE` tinyint(1) NOT NULL DEFAULT '0', `KICK_MEMBER` tinyint(1) NOT NULL DEFAULT '0'," +
             " `BAN_MEMBER` tinyint(1) NOT NULL DEFAULT '0', `TOGGLE_RAIDMODE` tinyint(4) NOT NULL DEFAULT '0', `UNMUTE` tinyint(1) NOT NULL DEFAULT '0');"),

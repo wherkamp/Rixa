@@ -1,7 +1,6 @@
 package io.rixa.bot.reactions.react;
 
 import io.rixa.bot.Rixa;
-import io.rixa.bot.commands.handler.CommandHandler;
 import io.rixa.bot.commands.handler.CommandType;
 import io.rixa.bot.guild.RixaGuild;
 import io.rixa.bot.guild.manager.GuildManager;
@@ -10,12 +9,9 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.events.message.guild.react.GuildMessageReactionAddEvent;
-import net.dv8tion.jda.core.events.message.priv.react.PrivateMessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.exceptions.ErrorResponseException;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;
-import org.intellij.lang.annotations.Subst;
 
 public class HelpReaction extends React {
 
@@ -23,20 +19,16 @@ public class HelpReaction extends React {
     super(name);
   }
 
-  @Override
   @SubscribeEvent
   public void onReact(MessageReactionAddEvent event) {
-    System.out.println("Help Triggered");
-    if (event.getUser().getId().equalsIgnoreCase(event.getJDA().getSelfUser().getId())) {
+    if (event.getUser().isBot()) {
       return;
     }
-    System.out.println("Not bot");
     Message message = event.getChannel().getMessageById(event.getMessageId()).complete();
     this.execute(message, event.getReaction().getReactionEmote().getName(), event.getJDA());
   }
 
   private void execute(Message message, String emoteName, JDA jda) {
-    System.out.println("Executed");
     MessageEmbed messageEmbed = message.getEmbeds().get(0);
     if (!messageEmbed.getTitle().contains(": ")) {
       return;

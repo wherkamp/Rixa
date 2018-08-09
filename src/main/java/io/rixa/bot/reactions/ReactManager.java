@@ -23,8 +23,8 @@ public class ReactManager {
   }
 
   public React getReaction(String react) throws ReactNotFoundException {
-    if (reactMap.containsKey(react.toLowerCase())) {
-      return reactMap.get(react.toLowerCase());
+    if (reactMap.containsKey(react)) {
+      return reactMap.get(react);
     }
     throw new ReactNotFoundException("Could not find reaction");
   }

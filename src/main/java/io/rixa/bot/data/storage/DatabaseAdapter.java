@@ -35,8 +35,9 @@ public class DatabaseAdapter {
         Configuration config = rixaInstance.getConfiguration();
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        String url = String.format("jdbc:mysql://%s:%s/%s", config.getSqlCredentials().get("hostName"),
-                config.getSqlCredentials().get("port"), config.getSqlCredentials().get("databaseName"));
+        String url = String.format("jdbc:mysql://%s:%s/%s%s", config.getSqlCredentials().get("hostName"),
+                config.getSqlCredentials().get("port"), config.getSqlCredentials().get("databaseName"),
+                config.getSqlCredentials().get("jdbc_args"));
         dataSource.setUrl(url);
         dataSource.setUsername(config.getSqlCredentials().get("userName"));
         dataSource.setPassword(config.getSqlCredentials().get("password"));

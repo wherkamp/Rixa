@@ -91,8 +91,7 @@ public class Rixa {
         .setToken(configuration.getToken())
         .setGame(Game.of(GameType.DEFAULT, configuration.getBotGame()))
         .setEventManager(new AnnotatedEventManager())
-        .addEventListener(new ReadyListener(), new BotJoinListener(), new MessageListener(),
-            new UserListener())
+        .addEventListener(new ReadyListener(), new BotJoinListener(), new MessageListener(), new UserListener())
         .setAutoReconnect(true)
         .setAudioEnabled(true)
         .setEnableShutdownHook(false)
@@ -102,7 +101,6 @@ public class Rixa {
         getLogger().info("Loading Shard #" + (i + 1) + "!");
         getShardList().add(jda.useSharding(i, configuration.getShards()).buildBlocking());
         getLogger().info("Shard #" + (i + 1) + " has been loaded");
-        Thread.sleep(5000);
       } catch (InterruptedException | LoginException e) {
         e.printStackTrace();
       }
@@ -126,47 +124,73 @@ public class Rixa {
 
   private void registerCommands() {
     this.commandHandler.registerCommands(
-        new AdviceCommand("advice", RixaPermission.NONE, "Receive advice from the great beyond...",
-            CommandType.USER),
-        new FeaturesCommand("features", RixaPermission.NONE, "List Rixa's official features!",
-            CommandType.USER),
-        new HelpCommand("help", RixaPermission.NONE, "Review commands and its usages!",
-            CommandType.USER),
-        new InfoCommand("info", RixaPermission.NONE, "Review information about a user or Rixa!",
-            CommandType.USER),
-        new MinecraftCommand("minecraft", RixaPermission.NONE, "See minecraft server info",
-            CommandType.USER, Collections.singletonList("mc")),
-        new ModulesCommand("modules", RixaPermission.NONE,
-            "List both enabled & disabled features of Rixa for this server!", CommandType.USER),
-        new MusicCommand("music", RixaPermission.NONE, "Listen to music right from discord!",
-            CommandType.USER),
-        new PingCommand("ping", RixaPermission.NONE, "Check Rixa's ping!", CommandType.USER),
-            new MsbCommand("msb", RixaPermission.NONE, "Create a mocking Spongebob meme", CommandType.USER),
-        new ServerInfoCommand("serverinfo", RixaPermission.NONE,
-            "Review information about the server!", CommandType.USER),
-        new QuoteCommand("quote", RixaPermission.NONE,
-            "Receive a quote from some of the greatest authors!", CommandType.USER),
-        new RankCommand("rank", RixaPermission.NONE, "Check your rank!", CommandType.USER),
-        new LeaderboardsCommand("leaderboards", RixaPermission.NONE,
-            "Look at the levels leaderboards!", CommandType.USER),
-        new YoutubeCommand("youtube", RixaPermission.NONE, "Search for music on youtube!",
-            CommandType.USER),
-        new UrbanDictionaryCommand("ud", RixaPermission.NONE, "Look up urban definitions!",
-            CommandType.USER),
+            new AdviceCommand("advice", RixaPermission.NONE, "Receive advice from the great beyond...",
+                CommandType.USER),
 
-        new BanCommand("ban", RixaPermission.BAN_MEMBER, "Ban a player from your server.",
-            CommandType.STAFF),
-        new ClearCommand("clear", RixaPermission.CLEAR_CHAT, "Clear Chat!", CommandType.STAFF,
-            Arrays.asList("deleemessages", "cmessages")),
-        new ConfigCommand("config", RixaPermission.ACCESS_CONFIG, "Access the config menu",
-            CommandType.STAFF),
-        new MuteCommand("mute", RixaPermission.MUTE, "Mute those pesky children!",
-            CommandType.STAFF),
-        new PMCommand("pm", RixaPermission.PM_MESSAGE,
-            "Private Message all users with a specific role!", CommandType.STAFF),
-        new RoleMemberList("listmembers", RixaPermission.NONE,
-            "List all users with a specific role!", CommandType.STAFF),
-        new ShutdownCommand("shutdown", RixaPermission.NONE, "Shutdown Rixa!", CommandType.OWNER));
+            new FeaturesCommand("features", RixaPermission.NONE, "List Rixa's official features!",
+                CommandType.USER),
+
+            new HelpCommand("help", RixaPermission.NONE, "Review commands and its usages!",
+                CommandType.USER),
+
+            new InfoCommand("info", RixaPermission.NONE, "Review information about a user or Rixa!",
+                CommandType.USER),
+
+            new MinecraftCommand("minecraft", RixaPermission.NONE, "See minecraft server info",
+                CommandType.USER, Collections.singletonList("mc")),
+
+            new ModulesCommand("modules", RixaPermission.NONE,
+            "List both enabled & disabled features of Rixa for this server!", CommandType.USER),
+
+            new MusicCommand("music", RixaPermission.NONE, "Listen to music right from discord!",
+                CommandType.USER),
+
+            new PingCommand("ping", RixaPermission.NONE, "Check Rixa's ping!",
+                CommandType.USER),
+
+            new MsbCommand("msb", RixaPermission.NONE, "Create a mocking Spongebob meme",
+                    CommandType.USER),
+
+            new NoworkCommand("nowork", RixaPermission.NONE, "For when you just have to bitch about Rixa",
+                    CommandType.USER),
+
+            new ServerInfoCommand("serverinfo", RixaPermission.NONE,
+                    "Review information about the server!", CommandType.USER),
+
+            new QuoteCommand("quote", RixaPermission.NONE,
+                    "Receive a quote from some of the greatest authors!", CommandType.USER),
+
+            new RankCommand("rank", RixaPermission.NONE, "Check your rank!", CommandType.USER),
+
+            new LeaderboardsCommand("leaderboards", RixaPermission.NONE,
+                    "Look at the levels leaderboards!", CommandType.USER),
+
+            new YoutubeCommand("youtube", RixaPermission.NONE, "Search for music on youtube!",
+                    CommandType.USER),
+
+            new UrbanDictionaryCommand("ud", RixaPermission.NONE, "Look up urban definitions!",
+                    CommandType.USER),
+
+            new BanCommand("ban", RixaPermission.BAN_MEMBER, "Ban a player from your server.",
+                    CommandType.STAFF),
+
+            new ClearCommand("clear", RixaPermission.CLEAR_CHAT, "Clear Chat!", CommandType.STAFF,
+                    Arrays.asList("deleemessages", "cmessages")),
+
+            new ConfigCommand("config", RixaPermission.ACCESS_CONFIG, "Access the config menu",
+                    CommandType.STAFF),
+
+            new MuteCommand("mute", RixaPermission.MUTE, "Mute those pesky children!",
+                    CommandType.STAFF),
+
+            new PMCommand("pm", RixaPermission.PM_MESSAGE,
+                    "Private Message all users with a specific role!", CommandType.STAFF),
+
+            new RoleMemberList("listmembers", RixaPermission.NONE,
+                    "List all users with a specific role!", CommandType.STAFF),
+
+            new ShutdownCommand("shutdown", RixaPermission.NONE, "Shutdown Rixa!",
+                    CommandType.OWNER));
   }
 
   private void loadConfiguration() {

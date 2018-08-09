@@ -10,8 +10,8 @@ public enum RixaPermission {
     PM_MESSAGE,
     KICK_MEMBER,
     BAN_MEMBER,
-    BATCH_MOVE,
-    TOGGLE_RAIDMODE;
+    TOGGLE_RAIDMODE,
+    UNMUTE;
 
     public static RixaPermission fromString(String string) {
         for (RixaPermission value : values()) {

@@ -58,7 +58,6 @@ public class RixaGuild implements IGuild {
     public void save() {
         modules.values().forEach(RixaModule::save);
         settings.save();
-
         permissionMap.keySet().forEach(object -> {
             List<RixaPermission> permissions = permissionMap.get(object);
             List<String> permission = new ArrayList<>();
@@ -67,7 +66,7 @@ public class RixaGuild implements IGuild {
                     (permissions.contains(stringPermission) ? "'1'" : "'0'")));
             DatabaseAdapter.getInstance().get().update(
                     "UPDATE `permissions` SET " + String.join(", " + permission) +
-                            " WHERE `guild_id` = ? AND `object_id` = ?",
+                            " WHERE `guild_id` = ? AND `role_id` = ?",
                     guild.getId(), object);
         });
     }
@@ -98,14 +97,7 @@ public class RixaGuild implements IGuild {
     @Override
     public boolean hasPermission(User user, RixaPermission permission) {
         Member member = guild.getMember(user);
-        if (member == null) return false;
-        if (!member.getRoles().stream().filter(role -> (permissionMap.containsKey(role.getId()) &&
-                 permissionMap.get(role.getId()).contains(permission)))
-                .collect(Collectors.toList()).isEmpty()) {
-            return true;
-        }
-        return UserManager.getInstance().getUser
-                (user).hasPermission(guild.getId(), permission);
+        return member != null && (!member.getRoles().stream().filter(role -> (permissionMap.containsKey(role.getId()) && permissionMap.get(role.getId()).contains(permission))).collect(Collectors.toList()).isEmpty() || UserManager.getInstance().getUser(user).hasPermission(guild.getId(), permission));
     }
 
     @Override

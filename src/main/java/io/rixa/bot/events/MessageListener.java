@@ -10,6 +10,7 @@ import io.rixa.bot.guild.RixaGuild;
 import io.rixa.bot.guild.manager.GuildManager;
 import io.rixa.bot.guild.modules.module.ConversationModule;
 import io.rixa.bot.reactions.React;
+import io.rixa.bot.reactions.react.HelpReaction;
 import io.rixa.bot.user.RixaUser;
 import io.rixa.bot.user.manager.UserManager;
 import io.rixa.bot.utils.DiscordUtils;
@@ -27,7 +28,6 @@ public class MessageListener {
 
   @SubscribeEvent
   public void onReactionAdded(MessageReactionAddEvent event) {
-    System.out.println("Reaction Event Triggered - 1");
     if (event.getUser().isBot()) {
       return;
     }
