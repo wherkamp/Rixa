@@ -97,8 +97,7 @@ public class MessageListener {
     }
   }
 
-  private void command(String commandName, String prefix, GuildMessageReceivedEvent event,
-      String[] args) {
+  private void command(String commandName, String prefix, GuildMessageReceivedEvent event, String[] args) {
     commandName = commandName.replaceFirst(prefix, "");
     try {
       Command command = Rixa.getInstance().getCommandHandler().getCommand(commandName);
@@ -123,8 +122,7 @@ public class MessageListener {
       return;
     }
     try {
-      MessageFactory.create(conversationModule.getChatBotSession().think(message)).selfDestruct(0)
-          .queue(channel);
+      MessageFactory.sendPlainMessage(conversationModule.getChatBotSession().think(message), channel);
     } catch (Exception ignored) {
     }
   }

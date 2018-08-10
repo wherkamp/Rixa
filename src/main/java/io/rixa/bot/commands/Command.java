@@ -46,6 +46,5 @@ public abstract class Command {
 
   //   public abstract void execute(GuildMessageReceivedEvent event);
 
-  public abstract void execute(String commandLabel, Guild guild, Member member, TextChannel channel,
-      String[] args) throws IOException;
+  public abstract void execute(String commandLabel, Guild guild, Member member, TextChannel channel, String[] args) throws IOException;
 }

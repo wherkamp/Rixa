@@ -2,10 +2,7 @@ package io.rixa.bot.utils;
 
 import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.exceptions.PermissionException;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
@@ -174,8 +171,14 @@ public class MessageFactory {
     public static MessageFactory create() {
         return new MessageFactory();
     }
-
     public static MessageFactory create(String s) {
         return new MessageFactory(s);
+    }
+    public static void sendPlainMessage(String s, TextChannel c){
+        if(c.canTalk()) {
+            c.sendMessage(s).queue();
+        } else {
+            System.out.println("No permission to speak in "+c.getName()+" channel on "+c.getGuild().getName()+" guild.");
+        }
     }
 }

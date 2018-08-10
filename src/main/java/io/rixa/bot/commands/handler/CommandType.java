@@ -4,5 +4,5 @@ public enum CommandType {
 
   STAFF,
   USER,
-  OWNER;
+  OWNER
 }

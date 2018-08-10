@@ -16,6 +16,6 @@ public class PingCommand extends Command {
 
     @Override
     public void execute(String commandLabel, Guild guild, Member member, TextChannel channel, String[] args) {
-        MessageFactory.create("Pong! [" + guild.getJDA().getPing() + "ms]").setColor(member.getColor()).queue(channel);
+        MessageFactory.sendPlainMessage("Pong! [" + guild.getJDA().getPing() + "ms]", channel);
     }
 }

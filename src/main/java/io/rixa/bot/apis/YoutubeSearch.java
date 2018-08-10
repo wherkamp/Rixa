@@ -37,14 +37,14 @@ public class YoutubeSearch {
         return items.getJSONObject(index).getJSONObject("id").getString("kind");
     }
 
-    public String getVideoId(int index) throws JSONException {
+    private String getVideoId(int index) throws JSONException {
         if (!hasVideoId(index)) {
             index++;
         }
         return items.getJSONObject(index).getJSONObject("id").getString("videoId");
     }
 
-    public boolean hasVideoId(int index) {
+    private boolean hasVideoId(int index) {
         return items.getJSONObject(index).getJSONObject("id").has("videoId");
     }
 
@@ -85,7 +85,7 @@ public class YoutubeSearch {
     }
 
     public String getUrl(int index) {
-        String YOUTUBE_WATCH_BASE_URL = "https://www.youtube.com/watch?v=";
+        String YOUTUBE_WATCH_BASE_URL = "https://youtube.com/watch?v=";
         return YOUTUBE_WATCH_BASE_URL + getVideoId(index);
     }
 
