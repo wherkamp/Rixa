@@ -4,12 +4,15 @@ import io.rixa.bot.commands.Command;
 import io.rixa.bot.commands.handler.CommandType;
 import io.rixa.bot.commands.perms.RixaPermission;
 import io.rixa.bot.data.storage.DatabaseAdapter;
+import io.rixa.bot.data.storage.enums.Statements;
 import io.rixa.bot.guild.RixaGuild;
 import io.rixa.bot.guild.manager.GuildManager;
 import io.rixa.bot.user.RixaUser;
 import io.rixa.bot.user.manager.UserManager;
 import io.rixa.bot.utils.DiscordUtils;
 import io.rixa.bot.utils.MessageFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -45,21 +48,21 @@ public class RankCommand extends Command {
     private MessageFactory getInfo(RixaGuild rixaGuild, Member member) {
         User author = member.getUser();
         int rank = 1;
-        int count = DatabaseAdapter.getInstance().get().queryForObject
-                ("SELECT COUNT(*) FROM `levels`", Integer.class);
+        int count = DatabaseAdapter.getInstance().get().queryForObject("SELECT COUNT(*) FROM `levels`", Integer.class);
         if (count > 0) {
-            rank = DatabaseAdapter.getInstance().get().queryForObject("SELECT * FROM `levels` WHERE `guild_id` = ? ORDER BY `experience` DESC",
-                    new Object[]{member.getGuild().getId()}, (resultSet, i) -> {
-                        int main = 1;
+            rank = DatabaseAdapter.getInstance().get().queryForObject
+                    (Statements.SELECT_ALL_FROM_TABLE.getStatement("{table_name}", "levels")+" ORDER BY `experience` DESC",
+                            new Object[]{member.getGuild().getId()}, (resultSet, i) -> {
+                                int main = 1;
 
-                        while (resultSet.next()) {
-                            if (resultSet.getString("user_id").equalsIgnoreCase(member.getUser().getId())) {
+                                while (resultSet.next()) {
+                                    if (resultSet.getString("user_id").equalsIgnoreCase(member.getUser().getId())) {
+                                        return main;
+                                    }
+                                    main++;
+                                }
                                 return main;
-                            }
-                            main++;
-                        }
-                        return main;
-                    });
+                            });
         }
         RixaUser rixaUser = UserManager.getInstance().getUser(member.getUser());
         int levels = rixaUser.getLevels(rixaGuild.getGuild().getId());
@@ -68,8 +71,7 @@ public class RankCommand extends Command {
                 .setTitle(author.getName() + "'s level")
                 .setColor(member.getColor())
                 .addField("Rank", String.valueOf(rank), true)
-                .addField("Level", String.valueOf(DiscordUtils.getLevelFromExperience(rixaUser.getLevels
-                        (rixaGuild.getId()))), true)
+                .addField("Level", String.valueOf(DiscordUtils.getLevelFromExperience(rixaUser.getLevels(rixaGuild.getId()))), true)
                 .addField("Exp Needed",
                         DiscordUtils.getRemainingExperience(levels) + "/" + DiscordUtils.getNeededXP
                                 (DiscordUtils.getLevelFromExperience(levels)).intValue(), false)

@@ -48,9 +48,6 @@ public class MessageListener {
         return null;
       }
       String[] titleSplit = messageEmbed.getTitle().split(": ");
-      if (titleSplit[0].equalsIgnoreCase("Leaderboard")) {
-        return null; // Not sure if this is required anymore.
-      }
       try {
         React react = Rixa.getInstance().getReactManager().getReaction(titleSplit[0]);
         if (react != null) {

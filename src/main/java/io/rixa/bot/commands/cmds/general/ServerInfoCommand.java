@@ -27,7 +27,7 @@ public class ServerInfoCommand extends Command {
         User owner = guild.getOwner().getUser();
         MessageFactory
                 .create(rixaGuild.getDescription())
-                .setTitle(guild.getName(), String.format("http://rixa.io/servers/%s", guild.getId()))
+                .setTitle(guild.getName())
                 .addField("Created", guild.getCreationTime().format(formatter), true)
                 .addField("Region", guild.getRegion().toString(), true)
                 .addField("Users", String.valueOf(guild.getMembers().size()), true)

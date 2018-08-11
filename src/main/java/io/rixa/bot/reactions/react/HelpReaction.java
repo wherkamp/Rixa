@@ -34,7 +34,7 @@ public class HelpReaction extends React {
       return;
     }
     String title = messageEmbed.getTitle().split(": ")[1];
-    RixaGuild rixaGuild = GuildManager.getInstance().getGuild(jda.getGuildById(title));
+    RixaGuild rixaGuild = GuildManager.getInstance().getGuild(Rixa.getGuildById(title));
     if (rixaGuild == null) {
       return;
     }

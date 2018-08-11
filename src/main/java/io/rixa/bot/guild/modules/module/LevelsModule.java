@@ -58,7 +58,7 @@ public class LevelsModule implements RixaModule {
             return;
         }
         List<Object> expList = DatabaseAdapter.getInstance().get().queryForObject
-                (Statements.SELECT_ALL_FROM_TABLE.getStatement("{table_name}", "levels"),
+                (Statements.SELECT_ALL_FROM_TABLE.getStatement("{table_name}", "levels")+" ORDER BY `experience` DESC",
                         new Object[]{guild.getId()}, (resultSet, i) -> {
                             List<Object> list = new ArrayList<>();
                             resultSet.beforeFirst();

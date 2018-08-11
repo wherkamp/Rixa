@@ -12,7 +12,7 @@ public class ObjectPagination {
     public ObjectPagination(List<Object> objects, int pageSize) {
         this.objects = objects;
         this.pageSize = pageSize;
-        this.maxPage = (objects.size() / pageSize + (objects.size() % pageSize));
+        this.maxPage = (int) Math.ceil((objects.size()/pageSize)+1);
     }
 
     public List<Object> getPage(int page) {

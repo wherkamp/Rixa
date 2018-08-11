@@ -23,6 +23,7 @@ import io.rixa.bot.guild.RixaGuild;
 import io.rixa.bot.guild.manager.GuildManager;
 import io.rixa.bot.reactions.ReactManager;
 import io.rixa.bot.reactions.react.HelpReaction;
+import io.rixa.bot.reactions.react.LeaderboardsReaction;
 import io.rixa.bot.user.RixaUser;
 import io.rixa.bot.user.manager.UserManager;
 import io.rixa.bot.utils.FileUtils;
@@ -120,6 +121,7 @@ public class Rixa {
 
   private void registerReactions() {
     this.reactManager.registerReact(new HelpReaction("Help"));
+    this.reactManager.registerReact(new LeaderboardsReaction("Leaderboard"));
   }
 
   private void registerCommands() {
@@ -215,7 +217,7 @@ public class Rixa {
     }
   }
 
-  public Guild getGuildById(String id) {
+  public static Guild getGuildById(String id) {
     Guild guild = null;
     for (JDA jda : Rixa.getInstance().getShardList()) {
       if (jda.getGuilds().size() == 0 || jda.getGuildById(id) == null) {
