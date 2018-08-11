@@ -50,19 +50,9 @@ public class RankCommand extends Command {
         int rank = 1;
         int count = DatabaseAdapter.getInstance().get().queryForObject("SELECT COUNT(*) FROM `levels`", Integer.class);
         if (count > 0) {
-            rank = DatabaseAdapter.getInstance().get().queryForObject
-                    (Statements.SELECT_ALL_FROM_TABLE.getStatement("{table_name}", "levels")+" ORDER BY `experience` DESC",
-                            new Object[]{member.getGuild().getId()}, (resultSet, i) -> {
-                                int main = 1;
-
-                                while (resultSet.next()) {
-                                    if (resultSet.getString("user_id").equalsIgnoreCase(member.getUser().getId())) {
-                                        return main;
-                                    }
-                                    main++;
-                                }
-                                return main;
-                            });
+            rank = DatabaseAdapter.getInstance().get().queryForObject(
+                    "SELECT FIND_IN_SET(`experience`, (SELECT GROUP_CONCAT(`experience` ORDER BY `experience` DESC) FROM `levels`)) AS `rank` FROM `levels` WHERE `guild_id` = ? AND `user_id` = ?",
+                    new Object[]{member.getGuild().getId(), member.getUser().getId()}, Integer.class);
         }
         RixaUser rixaUser = UserManager.getInstance().getUser(member.getUser());
         int levels = rixaUser.getLevels(rixaGuild.getGuild().getId());
@@ -71,10 +61,10 @@ public class RankCommand extends Command {
                 .setTitle(author.getName() + "'s level")
                 .setColor(member.getColor())
                 .addField("Rank", String.valueOf(rank), true)
-                .addField("Level", String.valueOf(DiscordUtils.getLevelFromExperience(rixaUser.getLevels(rixaGuild.getId()))), true)
+                .addField("Level", String.valueOf(DiscordUtils.getLevelFromExperience(rixaUser.getLevels(rixaGuild.getId()))), false)
                 .addField("Exp Needed",
                         DiscordUtils.getRemainingExperience(levels) + "/" + DiscordUtils.getNeededXP
-                                (DiscordUtils.getLevelFromExperience(levels)).intValue(), false)
+                                (DiscordUtils.getLevelFromExperience(levels)).intValue(), true)
                 .addField("Total Exp", String.valueOf(levels), true);
     }
 }
