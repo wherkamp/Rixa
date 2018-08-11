@@ -29,8 +29,7 @@ public class RankCommand extends Command {
     public void execute(String commandLabel, Guild guild, Member member, TextChannel channel, String[] args) {
         RixaGuild rixaGuild = GuildManager.getInstance().getGuild(guild);
         if (!rixaGuild.getModule("Levels").isEnabled()) {
-            MessageFactory.create("Levels are not enabled on this server!")
-                    .setColor(member.getColor()).queue(channel);
+            MessageFactory.create("Levels are not enabled on this server!").setColor(member.getColor()).queue(channel);
             return;
         }
         if (args.length == 0) {

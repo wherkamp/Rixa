@@ -8,6 +8,7 @@ import io.rixa.bot.guild.manager.GuildManager;
 import io.rixa.bot.guild.modules.module.LevelsModule;
 import io.rixa.bot.utils.DiscordUtils;
 import io.rixa.bot.utils.MessageFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.core.entities.Guild;
@@ -17,8 +18,8 @@ import net.dv8tion.jda.core.entities.User;
 
 public class LeaderboardsCommand extends Command {
 
-  public LeaderboardsCommand(String command, RixaPermission rixaPermission, String description, CommandType commandType) {
-    super(command, rixaPermission, description, commandType);
+  public LeaderboardsCommand(String command, RixaPermission rixaPermission, String description, CommandType commandType, List<String> aliases) {
+    super(command, rixaPermission, description, commandType, aliases);
   }
 
   @Override

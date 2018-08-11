@@ -165,7 +165,8 @@ public class Rixa {
             new RankCommand("rank", RixaPermission.NONE, "Check your rank!", CommandType.USER),
 
             new LeaderboardsCommand("leaderboards", RixaPermission.NONE,
-                    "Look at the levels leaderboards!", CommandType.USER),
+                    "Look at the levels leaderboards!", CommandType.USER,
+                    Arrays.asList("leaderboard", "top")),
 
             new YoutubeCommand("youtube", RixaPermission.NONE, "Search for music on youtube!",
                     CommandType.USER),

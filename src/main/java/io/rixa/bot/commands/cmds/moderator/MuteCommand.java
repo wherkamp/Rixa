@@ -27,8 +27,7 @@ public class MuteCommand extends Command {
   }
 
   @Override
-  public void execute(String commandLabel, Guild guild, Member member, TextChannel channel,
-      String[] args) {
+  public void execute(String commandLabel, Guild guild, Member member, TextChannel channel, String[] args) {
     RixaGuild rixaGuild = GuildManager.getInstance().getGuild(guild);
     if (args.length < 2) {
       MessageFactory.create(String.format
